@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import productRouter from './routes/productRoutes.js';
 
 dotenv.config();
 
@@ -24,9 +25,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(morgan("dev"));
 
 // routes
-app.get("/", (req, res) => {
-    res.send("Hello");
-});
+app.use('/api/products/', productRouter);
 
 // cport
 const PORT = process.env.PORT || 5000;
