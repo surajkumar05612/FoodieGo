@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import LayoutApp from '../../components/Layout';
 
 const Products = () => {
   return (
-    <div>
-        Products
-    </div>
+    <LayoutApp>
+        <h2>Products</h2>
+    </LayoutApp>
   )
 }
 
