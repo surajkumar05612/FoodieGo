@@ -13,6 +13,11 @@ import {
   const { Header, Sider, Content } = Layout;
   const LayoutApp = ({children}) => {
     const [collapsed, setCollapsed] = useState(false);
+
+    const toggle = () => {
+      setCollapsed(!collapsed);
+    };
+
     return (
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -46,7 +51,7 @@ import {
           >
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
-              onClick: () => setCollapsed(!collapsed),
+              onClick: () => toggle,
             })}
           </Header>
           <Content

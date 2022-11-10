@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import LayoutApp from '../../components/Layout'
+import LayoutApp from '../../components/Layout';
+import { Row, Col } from 'antd';
+import Product from '../../components/Product';
 
 const Home = () => {
     const [productData, setProductData] = useState([]);
@@ -22,7 +24,13 @@ const Home = () => {
 
   return (
     <LayoutApp>
-        Home
+        <Row>
+            {productData.map (product=> (
+                <Col xs={24} sm={12} md={12} lg={6}>
+                    <Product product={product} />
+                </Col>
+            ))}
+        </Row>
     </LayoutApp>
   )
 }
