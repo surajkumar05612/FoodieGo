@@ -4,19 +4,30 @@ import {
     HomeOutlined,
     MoneyCollectOutlined,
     UserSwitchOutlined,
-    LogoutOutlined
+    LogoutOutlined,
+    ShoppingCartOutlined
   } from '@ant-design/icons';
   import './Layout.css';
   import { Layout, Menu } from 'antd';
   import React, { useState } from 'react';
   import { Link } from 'react-router-dom';
+  import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
   const { Header, Sider, Content } = Layout;
   const LayoutApp = ({children}) => {
+    const {cartItems} = useSelector(state => state.rootReducer);
+
     const [collapsed, setCollapsed] = useState(false);
+
+    const dispatch = useDispatch();
 
     const toggle = () => {
       setCollapsed(!collapsed);
     };
+
+    useEffect(() => {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    }, [cartItems]);
 
     return (
       <Layout>
@@ -53,6 +64,10 @@ import {
               className: 'trigger',
               onClick: () => toggle,
             })}
+            <div className="cart-items">
+              <ShoppingCartOutlined />
+              <span className="cart-badge">{cartItems.length}</span>
+            </div>
           </Header>
           <Content
             className="site-layout-background"

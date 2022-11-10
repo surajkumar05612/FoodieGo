@@ -1,21 +1,27 @@
 import React from 'react'
-import { Card } from 'antd';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, Card } from 'antd';
+import { useDispatch } from 'react-redux';
 
 const Product = ({product}) => {
+  const dispatch = useDispatch();
+
+  const handlerToCart = () => {
+    dispatch({
+      type: "UPDATE_CART",
+      payload: product
+    })
+  }
   const { Meta } = Card;
   return (
     <Card
       hoverable
       style={{ width: 240, marginBottom: 30 }}
       cover={<img alt={product.name} src={product.image} style={{height: 200 }}/>}
-      actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-      ]}
     >
       <Meta title={product.name} description={product.category} />
+      <div className="product-btn">
+        <Button onClick={() => handlerToCart()}>Add to Cart</Button>
+      </div>
     </Card>
   )
 }
