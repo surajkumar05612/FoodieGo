@@ -60,3 +60,13 @@ body {
   background-color: #001e28;
   color: #ffffff;
 }
+
+.cart-add{
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.cart-minus{
+  margin-left: 5px;
+  cursor: pointer;
+}
