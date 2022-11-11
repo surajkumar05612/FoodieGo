@@ -13,9 +13,10 @@ import {
   import { Link, useNavigate } from 'react-router-dom';
   import { useSelector } from 'react-redux';
   import { useEffect } from 'react';
+import Spinner from './Spinner';
   const { Header, Sider, Content } = Layout;
   const LayoutApp = ({children}) => {
-    const {cartItems} = useSelector(state => state.rootReducer);
+    const {cartItems, loading} = useSelector(state => state.rootReducer);
 
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ import {
 
     return (
       <Layout>
+        {loading && <Spinner />}
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="logo">
             <h2 className="logo-title">Foodie Go</h2>

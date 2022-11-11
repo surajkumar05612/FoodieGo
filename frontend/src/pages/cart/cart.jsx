@@ -26,6 +26,13 @@ const Cart = () => {
     }
   };
 
+  const handlerDelete = (record) => {
+    dispatch({
+      type: "DELETE_FROM_CART",
+      payload: record
+    });
+  }
+
   const columns = [
     {
       title: "Name",
@@ -53,7 +60,7 @@ const Cart = () => {
     {
       title: "Action",
       dataIndex: "_id",
-      render:(id, record) => <DeleteOutlined />
+      render:(id, record) => <DeleteOutlined className='cart-action' onClick={() => handlerDelete(record)}/>
     }
   ]
   return (

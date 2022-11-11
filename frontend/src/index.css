@@ -64,14 +64,45 @@ body {
 .cart-minus{
   margin-right: 10px;
   cursor: pointer;
+  transition: all 0.5s ease
+}
+
+.cart-minus:hover {
+  filter: drop-shadow(0 0 2px #001e28);
+  color: #ffffff;
 }
 
 .cart-add{
   margin-left: 10px;
   cursor: pointer;
+  transition: all 0.5s ease
+}
+
+.cart-add:hover {
+  filter: drop-shadow(0 0 2px #001e28);
+  color: #ffffff;
 }
 
 .cart-quantity{
   font-size: 20px;
   vertical-align: bottom;
+}
+
+.cart-action{
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.cart-action:hover{
+  filter: drop-shadow(0 0 2px #ff0000);
+  color: #ffffff;
+}
+
+.loading{
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  text-align: center;
+  letter-spacing: 1.3px;
+  color: #001e28;
 }
