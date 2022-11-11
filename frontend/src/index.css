@@ -61,12 +61,17 @@ body {
   color: #ffffff;
 }
 
-.cart-add{
-  margin-right: 5px;
+.cart-minus{
+  margin-right: 10px;
   cursor: pointer;
 }
 
-.cart-minus{
-  margin-left: 5px;
+.cart-add{
+  margin-left: 10px;
   cursor: pointer;
+}
+
+.cart-quantity{
+  font-size: 20px;
+  vertical-align: bottom;
 }
