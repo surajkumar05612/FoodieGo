@@ -5,7 +5,7 @@ const initialState = {
 
 export const rootReducer = (state = initialState, action) => {
     switch(action.type) {
-        case "UPDATE_CART":
+        case "ADD_TO_CART":
         return {
             ...state,
             cartItems: [...state.cartItems, action.payload]
@@ -13,5 +13,3 @@ export const rootReducer = (state = initialState, action) => {
         default: return state;
     }
 }
-
-// 1:56:53

@@ -12,7 +12,7 @@ import {
   import React, { useState } from 'react';
   import { Link } from 'react-router-dom';
   import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+  import { useEffect } from 'react';
   const { Header, Sider, Content } = Layout;
   const LayoutApp = ({children}) => {
     const {cartItems} = useSelector(state => state.rootReducer);

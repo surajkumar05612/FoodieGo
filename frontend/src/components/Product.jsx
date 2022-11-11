@@ -7,7 +7,7 @@ const Product = ({product}) => {
 
   const handlerToCart = () => {
     dispatch({
-      type: "UPDATE_CART",
+      type: "ADD_TO_CART",
       payload: product
     })
   }
