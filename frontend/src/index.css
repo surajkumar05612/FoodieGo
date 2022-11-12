@@ -134,3 +134,29 @@ body {
   background-color: #ffffff !important;
   color: #001e28 !important;
 }
+
+.category{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.categoryFlex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 30px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.category-active {
+  box-shadow: 0 0 5px #c0c0c0;
+  border-radius: 5px;
+}
+
+.categoryName {
+  text-transform: capitalize;
+  letter-spacing: 1.3px;
+}
