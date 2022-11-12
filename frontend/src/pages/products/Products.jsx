@@ -12,12 +12,7 @@ const Products = () => {
 
   const [productData, setProductData] = useState([]);
   const [popModal, setPopModal] = useState(false);
-  const visible = () => {
-    setPopModal(true);
-  }
-  const hide = () => {
-    setPopModal(false);
-  }
+  const [editProduct, setEditProduct] = useState(false);
 
   const getAllProducts = async () => {
     try {
@@ -60,7 +55,7 @@ const columns = [
     render:(id, record) => 
     <div>
       <DeleteOutlined className='cart-action' />
-      <EditOutlined className='cart-edit' />
+      <EditOutlined className='cart-edit' onClick={() => {setEditProduct(record); setPopModal(true)}}/>
     </div>
   }
 ]
@@ -87,32 +82,35 @@ const handlerSubmit = async (value) => {
   return (
     <LayoutApp>
         <h2>All Products</h2>
-        <Button className='add-new' onClick={visible}>Add New</Button>
+        <Button className='add-new' onClick={() => setPopModal(true)}>Add New</Button>
         <Table dataSource={productData} columns={columns} bordered/>
-        <Modal title="Add New Product" visible={popModal} onCancel={hide} footer={false}>
-          <Form layout='vertical' onFinish={handlerSubmit}>
-            <FormItem name="name" label="Name">
-              <Input />
-            </FormItem>
-            <Form.Item name="category" label="Category">
-              <Select>
-                <Select.Option value="burger">Burger</Select.Option>
-                <Select.Option value="pizza">Pizza</Select.Option>
-                <Select.Option value="drinks">Drinks</Select.Option>
-                <Select.Option value="pasta">Pasta</Select.Option>
-              </Select>
-            </Form.Item>
-            <FormItem name="price" label="Price">
-              <Input />
-            </FormItem>
-            <FormItem name="image" label="Image Url">
-              <Input />
-            </FormItem>
-            <div className="form-btn-add">
-              <Button htmlType='submit' className='add-new'>Add</Button>
-            </div>
-          </Form>
-        </Modal>
+        {
+          popModal && 
+            <Modal title={`${editProduct !== null ? "Edit Product" : "Add New Product"}`} visible={popModal} onCancel={() => {setEditProduct(null); setPopModal(false);}} footer={false}>
+            <Form layout='vertical' onFinish={handlerSubmit}>
+              <FormItem name="name" label="Name">
+                <Input />
+              </FormItem>
+              <Form.Item name="category" label="Category">
+                <Select>
+                  <Select.Option value="burger">Burger</Select.Option>
+                  <Select.Option value="pizza">Pizza</Select.Option>
+                  <Select.Option value="drinks">Drinks</Select.Option>
+                  <Select.Option value="pasta">Pasta</Select.Option>
+                </Select>
+              </Form.Item>
+              <FormItem name="price" label="Price">
+                <Input />
+              </FormItem>
+              <FormItem name="image" label="Image Url">
+                <Input />
+              </FormItem>
+              <div className="form-btn-add">
+                <Button htmlType='submit' className='add-new'>Add</Button>
+              </div>
+            </Form>
+          </Modal>
+        }
     </LayoutApp>
   )
 }
