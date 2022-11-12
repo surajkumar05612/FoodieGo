@@ -20,3 +20,13 @@ export const addProductController = async (req, res) => {
         console.log(error);
     }
 }
+
+export const updateProductController = async (req, res) => {
+    try {
+        await Product.findOneAndUpdate({_id: req.body.productId}, req.body);
+        res.status(200).send("Product Updated Successfully");
+    } catch(error) {
+        res.status(400).send(error);
+        console.log(error);
+    }
+}

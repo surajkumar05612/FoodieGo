@@ -61,22 +61,40 @@ const columns = [
 ]
 
 const handlerSubmit = async (value) => {
-  try {
-    dispatch({
-        type: "SHOW_LOADING",
-    });
-    const res = await axios.post('/api/products/addproducts', value);
-    message.success("Product Added Successfully!");
-    getAllProducts();
-    setPopModal(false);
-    dispatch({
-        type: "HIDE_LOADING",
-    });
-    
-} catch (error) {
-  message.error("Error!");
-    console.log(error);
-}
+  if(editProduct === null) {
+    try {
+      dispatch({
+          type: "SHOW_LOADING",
+      });
+      const res = await axios.post('/api/products/addproducts', value);
+      message.success("Product Added Successfully!");
+      getAllProducts();
+      setPopModal(false);
+      dispatch({
+          type: "HIDE_LOADING",
+      });   
+    } catch (error) {
+        message.error("Error!");
+        console.log(error);
+    }
+  } else {
+    try {
+      dispatch({
+          type: "SHOW_LOADING",
+      });
+      await axios.put('/api/products/updateproducts', {...value, productId: editProduct._id});
+      message.success("Product Updated Successfully!");
+      getAllProducts();
+      setPopModal(false);
+      dispatch({
+          type: "HIDE_LOADING",
+      });
+      
+  } catch (error) {
+    message.error("Error!");
+      console.log(error);
+  }
+  }
 }
 
   return (
@@ -87,7 +105,7 @@ const handlerSubmit = async (value) => {
         {
           popModal && 
             <Modal title={`${editProduct !== null ? "Edit Product" : "Add New Product"}`} visible={popModal} onCancel={() => {setEditProduct(null); setPopModal(false);}} footer={false}>
-            <Form layout='vertical' onFinish={handlerSubmit}>
+            <Form layout='vertical' initialValues={editProduct} onFinish={handlerSubmit}>
               <FormItem name="name" label="Name">
                 <Input />
               </FormItem>
