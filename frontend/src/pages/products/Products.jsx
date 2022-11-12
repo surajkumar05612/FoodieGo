@@ -27,6 +27,9 @@ const Products = () => {
         console.log(data);
 
     } catch (error) {
+      dispatch({
+        type: "HIDE_LOADING",
+    })
         console.log(error);
     }
 }
@@ -34,6 +37,28 @@ const Products = () => {
   useEffect(() => {
     getAllProducts();
 }, []);
+
+const handlerDelete = async (record) => {
+  try {
+    dispatch({
+        type: "SHOW_LOADING",
+    });
+    await axios.post('/api/products/deleteproducts', {productId: record._id});
+    message.success("Product Deleted Successfully!");
+    getAllProducts();
+    setPopModal(false);
+    dispatch({
+        type: "HIDE_LOADING",
+    });
+    
+  } catch (error) {
+    dispatch({
+      type: "HIDE_LOADING",
+    });
+    message.error("Error!");
+    console.log(error);
+  }
+}
 
 const columns = [
   {
@@ -54,7 +79,7 @@ const columns = [
     dataIndex: "_id",
     render:(id, record) => 
     <div>
-      <DeleteOutlined className='cart-action' />
+      <DeleteOutlined className='cart-action' onClick={() => handlerDelete(record)}/>
       <EditOutlined className='cart-edit' onClick={() => {setEditProduct(record); setPopModal(true)}}/>
     </div>
   }
@@ -74,6 +99,9 @@ const handlerSubmit = async (value) => {
           type: "HIDE_LOADING",
       });   
     } catch (error) {
+      dispatch({
+        type: "HIDE_LOADING",
+      });
         message.error("Error!");
         console.log(error);
     }
@@ -91,6 +119,9 @@ const handlerSubmit = async (value) => {
       });
       
   } catch (error) {
+    dispatch({
+      type: "HIDE_LOADING",
+    });
     message.error("Error!");
       console.log(error);
   }

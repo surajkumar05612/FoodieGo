@@ -23,8 +23,18 @@ export const addProductController = async (req, res) => {
 
 export const updateProductController = async (req, res) => {
     try {
-        await Product.findOneAndUpdate({_id: req.body.productId}, req.body);
-        res.status(200).send("Product Updated Successfully");
+        await Product.findOneAndUpdate({_id: req.body.productId}, req.body, {new: true});
+        res.status(200).json("Product Updated Successfully");
+    } catch(error) {
+        res.status(400).send(error);
+        console.log(error);
+    }
+}
+
+export const deleteProductController = async (req, res) => {
+    try {
+        await Product.findOneAndDelete({_id: req.body.productId});
+        res.status(200).json("Product Deleted Successfully");
     } catch(error) {
         res.status(400).send(error);
         console.log(error);
