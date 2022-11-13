@@ -208,3 +208,8 @@ body {
   color: #001e28;
   text-decoration: underline;
 }
+
+.subTotal {
+  margin-top: 40px;
+  text-align: right;
+}

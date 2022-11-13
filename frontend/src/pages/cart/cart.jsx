@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import LayoutApp from '../../components/Layout';
 import { DeleteOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons'
-import { Table } from 'antd';
+import { Button, Form, Input, message, Modal, Select, Table } from 'antd';
+import FormItem from 'antd/lib/form/FormItem';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+
+  const [subTotal, setSubTotal] = useState(0);
+  const [billPopUp, setBillPopUp] = useState(false);
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const {cartItems} = useSelector(state => state.rootReducer);
 
@@ -63,10 +70,71 @@ const Cart = () => {
       render:(id, record) => <DeleteOutlined className='cart-action' onClick={() => handlerDelete(record)}/>
     }
   ]
+
+  useEffect(() => {
+
+    let temp = 0;
+    cartItems.forEach((product) => (temp = temp + product.price * product.quantity));
+    setSubTotal(temp); 
+
+}, [cartItems]);
+
+const handlerSubmit = async (value) => {
+  //console.log(value);
+  try {
+      const newObject = {
+          ...value,
+          cartItems,
+          subTotal,
+          tax: Number(((subTotal / 100) * 10).toFixed(2)),
+          totalAmount: Number((Number(subTotal) + Number(((subTotal / 100) * 10).toFixed(2))).toFixed(2)),
+          userId: JSON.parse(localStorage.getItem("auth"))._id
+      }
+      await axios.post("/api/bills/addbills", newObject);
+      message.success("Bill Generated!");
+      navigate("/bills");
+  } catch(error) {
+      message.error("Error!")
+      console.log(error);
+  }
+}
+
   return (
     <LayoutApp>
       <h2>Cart</h2> 
       <Table dataSource={cartItems} columns={columns} bordered/>
+      <div className="subTotal">
+        <h2>Sub Total: <span>$ {(subTotal).toFixed(2)}</span></h2>
+        <Button onClick={() => setBillPopUp(true)} className='add-new'>Create Invoice</Button>
+      </div>
+      <Modal title="Create Invoice" visible={billPopUp} onCancel={() => setBillPopUp(false)} footer={false}>
+        <Form layout='vertical' onFinish={handlerSubmit}>
+            <FormItem name="customerName" label="Customer Name">
+              <Input/>
+            </FormItem>
+            <FormItem name="customerPhone" label="Customer Phone">
+              <Input/>
+            </FormItem>
+            <FormItem name="customerAddress" label="Customer Address">
+              <Input/>
+            </FormItem>
+            <Form.Item name="paymentMethod" label="Payment Method">
+              <Select>
+                <Select.Option value="cash">Cash</Select.Option>
+                <Select.Option value="paypal">Paypal</Select.Option>
+                <Select.Option value="Card">Card</Select.Option>
+              </Select>
+            </Form.Item>
+            <div className="total">
+                <span>SubTotal: ${(subTotal.toFixed(2))}</span><br />
+                <span>Tax: ${((subTotal / 100) * 10).toFixed(2)}</span>
+                <h3>Total: ${(Number(subTotal) + Number(((subTotal / 100) * 10).toFixed(2))).toFixed(2)}</h3>
+            </div>
+            <div className="form-btn-add">
+              <Button htmlType='submit' className='add-new'>Generate Invoice</Button>
+            </div>  
+        </Form>
+      </Modal>
     </LayoutApp>
   )
 }

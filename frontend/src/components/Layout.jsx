@@ -48,7 +48,7 @@ import Spinner from './Spinner';
             <Menu.Item key="/customers" icon={<UserSwitchOutlined />}>
                 <Link to="/customers">Customers</Link> 
             </Menu.Item>
-            <Menu.Item key="/logout" icon={<LogoutOutlined />}>
+            <Menu.Item key="/logout" icon={<LogoutOutlined />} onClick={() => {localStorage.removeItem("auth"); navigate("/login");}}>
                 <Link to="/">Logout</Link> 
             </Menu.Item>
           </Menu>
