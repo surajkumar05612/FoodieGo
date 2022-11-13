@@ -31,7 +31,7 @@ const Customers = () => {
 
   useEffect(() => {
       getAllBills();
-  }, []);
+  },);
 
   const columns = [
     {
