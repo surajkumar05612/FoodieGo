@@ -160,3 +160,51 @@ body {
   text-transform: capitalize;
   letter-spacing: 1.3px;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form h2 {
+  letter-spacing: 2px;
+  color: #001e28;
+}
+
+.form p {
+  letter-spacing: 1.3px;
+  color: #001e28;
+}
+
+.form-group {
+  box-shadow: 0 0 5px #001e28;
+  padding: 10px 5px;
+  border-radius: 5px;
+}
+
+.form-group input {
+  border: none;
+  outline: none !important;
+  border-bottom: 1px solid #001e28;
+  width: 350px;
+  height: 40px;
+  padding: 5px 15px;
+}
+
+.form-group input:focus,
+.form-group input:hover {
+  border-color: #001e28;
+}
+
+.form-other {
+  color: #001e28;
+  letter-spacing: 1.3px;
+}
+
+.form-other:hover {
+  color: #001e28;
+  text-decoration: underline;
+}
